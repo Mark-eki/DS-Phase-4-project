@@ -95,20 +95,14 @@ Missing values: 5,803
 
 Duplicate rows: 22
 
-*Visualizations and Observations*:
+Observations*:
 *1. Sentiment Distribution Values*
-<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/4fcc20bb-273b-49e4-a0ab-eea1f7c39efc" />
-
 > Over half of the tweets expressed no emotion toward a brand or product.
 > Positive sentiment tweets followed with nearly 300, while negative tweets and “I can’t tell” tweets appeared less frequently.
 *2. Counting Brand/Product Mentions*
-<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/9c02f7e4-fb42-4189-b433-cf153be38431" />
-
 > iPad had the most tweets, indicating strong engagement and sentiment toward that product.
 > Other frequently mentioned entities included Apple, Google, and iPhone/iPad apps.
 *3.Tweet length Distribution*
-<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/b5c56a5d-544c-4725-8dd2-f3f0fa860613" />
-
 > The mean tweet length was approximately 105 characters, and a new column was added to the DataFrame to record tweet length.
 
 ## 3. Data Preparation
@@ -125,21 +119,13 @@ Duplicate rows: 22
     'emotion_in_tweet_is_directed_at': 'product' 
 
 ### 3.2 Data Inspection
-Here, we view the dataset in visuals after cleaning to see how it looks
-<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/8cd95b86-c7c8-4950-a7ab-358b4907654e" />
-
-> There is not a lot of difference between the original and the cleaned data but the cleaned data should have fewer rows.
+> Ffrom hte visualization as seen in the notebook;There is not a lot of difference between the original and the cleaned data but the cleaned data should have fewer rows.
 
 ### 3.3 Advanced Insights
 1. *Top 15 most common words.*
-   <img width="790" height="590" alt="image" src="https://github.com/user-attachments/assets/42e6de55-9b7b-42ae-9194-7d031a679735" />
-> As seen above,the most common words are; sxsw, lnik and ipad
+   
+> The most common words are; sxsw, lnik and ipad
 > while the least common words are; will, popup and this.
-
-2. *Basic summary from original data.*
-    <img width="989" height="589" alt="image" src="https://github.com/user-attachments/assets/36073fc4-d820-4316-8d81-3c82535c3390" />
-
- The cleaned dataset is the saved into a csv file : 'nlp_cleaned_data.csv'
 
  ## 4.Data Preprocessing
  ### 4.1 Cleaning before preprocessing
@@ -211,10 +197,6 @@ Accuracy score: 0.8535211267605634
 ### 5.1.3 Training a Support Vector Machine Model
 Accuracy score: 0.8915492957746479
 
-#### Confusion Matrix Plots for the 3 Binary Models
-
-<img width="1460" height="424" alt="image" src="https://github.com/user-attachments/assets/359cf2cc-089b-4907-98f5-7e63dadd60a2" />
-
 ### 5.1.4 Binary Model Performance Comparison 
 From the above matrix confusion matrix, we can conclude that:
 1. The linear svm produced the best model out of the three as it was able to predict accurately 89% of the time.
@@ -274,10 +256,6 @@ weighted avg       0.69      0.69      0.69      1819
 
 Accuracy: 0.6915887850467289
 
-#### Confusion Matrix Plots for the 3 Multiclass Models
-
-<img width="1460" height="424" alt="image" src="https://github.com/user-attachments/assets/dc820611-4b50-4e3e-b4cb-94798da908e0" />
-
 
 ### 5.2.4 Multiclass Model Performance Comparison
 According to the above, we can see that:
@@ -303,8 +281,6 @@ Test Set Accuracy: 0.6827927432655305
    macro avg       0.60      0.59      0.59      1819
 weighted avg       0.68      0.68      0.68      1819
 
-
-<img width="506" height="464" alt="image" src="https://github.com/user-attachments/assets/2c7ebf09-6c43-41a7-9b16-b150a5a3cbdd" />
 
 ### 5.2.6 Hyperparameter Tuning Performance Review
 After tuning our Support Vector Machine model, the training accuracy is 85% with testing accuracy still 69%.
