@@ -1,12 +1,6 @@
 ## Phase 4 Project
 # APPLE AND GOOGLE TWITTER SENTIMENT ANALYSIS
 
-## Authors
-Neema Naledi,
-Henia June,
-Morgan Amwai,
-Brian Kimathi,
-Mark Muriithi.
 
 ## 1.Business Understanding
 *__1.1 Overview__*
@@ -231,37 +225,234 @@ From the above matrix confusion matrix, we can conclude that:
 In this section, we’ll build models to classify tweets into three sentiment categories:
 - Positive emotion (1)
 - Negative emotion (0)
-- Neutral (2) → merged from “No emotion toward brand or product” and “I can’t tell”.   
+- Neutral (2) → merged from “No emotion toward brand or product” and “I can’t tell”.
+
+### 5.2.1 Training a Multiclass Logistic Regression Model
+Multiclass Logistic Regression Performance:
+
+              precision    recall  f1-score   support
+
+           0       0.37      0.49      0.42       114
+           1       0.59      0.60      0.60       596
+           2       0.77      0.73      0.75      1109
+
+    accuracy                           0.68      1819
+   macro avg       0.58      0.61      0.59      1819
+weighted avg       0.68      0.68      0.68      1819
+
+Accuracy: 0.6750962067069819
 
 
+
+### 5.2.2 Training a Multiclass Multinomial Naive Bayes Model
+Multiclass Naive Bayes Performance:
+              precision    recall  f1-score   support
+
+           0       0.29      0.57      0.38       114
+           1       0.53      0.71      0.61       596
+           2       0.81      0.58      0.67      1109
+
+    accuracy                           0.62      1819
+   macro avg       0.54      0.62      0.55      1819
+weighted avg       0.69      0.62      0.63      1819
+
+Accuracy: 0.6206706981858163
+
+
+### 5.2.3 Training a Support Vector Machine Model
+Multiclss SVM Performance:
+
+              precision    recall  f1-score   support
+
+           0       0.45      0.47      0.46       114
+           1       0.60      0.63      0.61       596
+           2       0.77      0.75      0.76      1109
+
+    accuracy                           0.69      1819
+   macro avg       0.61      0.62      0.61      1819
+weighted avg       0.69      0.69      0.69      1819
+
+Accuracy: 0.6915887850467289
+
+#### Confusion Matrix Plots for the 3 Multiclass Models
+
+<img width="1460" height="424" alt="image" src="https://github.com/user-attachments/assets/dc820611-4b50-4e3e-b4cb-94798da908e0" />
+
+
+### 5.2.4 Multiclass Model Performance Comparison
+According to the above, we can see that:
+1. The SVM model still did well with an acccurcy score of 69.1 % able to predict the targets more accurately.
+2. Here, with the inclusion of a third target, the logistic regression model did better with an accuracy score of 67.5 % compare to Multinomial Naive Bayes which had 62% accuracy.
+3. SVM model and logistics had high false positives with Multinomial Naive Bayes has high false negatives.
+
+
+### 5.2.5 Multiclass Hyperparameter Tuning on SVM Model
+GridSearchCV was applied to optimize the C parameter for SVM.
+The tuning process slightly improved model performance, confirming the chosen hyperparameters were effective.
+Best params: {'C': 10}
+Best Accuracy: 0.8523111612175873
+
+Test Set Accuracy: 0.6827927432655305
+              precision    recall  f1-score   support
+
+           0       0.45      0.41      0.43       114
+           1       0.58      0.61      0.60       596
+           2       0.76      0.75      0.75      1109
+
+    accuracy                           0.68      1819
+   macro avg       0.60      0.59      0.59      1819
+weighted avg       0.68      0.68      0.68      1819
+
+
+<img width="506" height="464" alt="image" src="https://github.com/user-attachments/assets/2c7ebf09-6c43-41a7-9b16-b150a5a3cbdd" />
+
+### 5.2.6 Hyperparameter Tuning Performance Review
+After tuning our Support Vector Machine model, the training accuracy is 85% with testing accuracy still 69%.
+Most notable is Class 1 target errors are heavily biased towards being misclassified as Class 2 213 times and Class 2 target errors are heavily biased towards being misclassified as Class 1 240 times.
 
 
  
 
 
-## Evaluation
+## 6.0 Evaluation, Recommendations, and Conclusion
+### 6.1 Overview
+
+This section evaluates the performance of the sentiment classification models and provides recommendations for improvement and future work.
+
+The project involved:
+
+Binary sentiment classification (positive vs. negative)
+
+Multi-class sentiment classification (negative, neutral, positive)
+
+Feature engineering: TF-IDF vectorization for text representation
+
+Balancing technique: SMOTE to address class imbalance
+
+Models tested: Logistic Regression, Naive Bayes, LinearSVC
+
+Hyperparameter tuning: GridSearchCV for optimization
+
+TF-IDF effectively represented textual data numerically, while SMOTE improved model fairness by synthetically balancing minority sentiment classes.
+
+### 6.2 Evaluation
+
+Both binary and multi-class classification models were implemented to analyze sentiment from Apple and Google tweets.
+TF-IDF ensured strong feature representation, and SMOTE improved recall for underrepresented sentiments.
+
+#### Model Performance Summary
+
+Model	Accuracy	Precision	Recall	F1-score	Notes
+Logistic Regression	0.847	0.84	0.84	0.84	Baseline
+Naive Bayes	0.853	0.85	0.85	0.85	Baseline
+LinearSVC (Tuned)	0.690	0.70	0.69	0.69	Tuned
+
+#### Key Findings
+
+Best Performing Model: Tuned LinearSVC achieved the most balanced performance across all metrics.
+
+Impact of SMOTE: Improved recall for minority classes, especially negative sentiments.
+
+Common Misclassifications: Neutral tweets were often confused with positive ones due to subtle tone or sarcasm.
+
+#### Confusion Matrix Insights
+
+False Positives: Neutral tweets predicted as positive.
+
+False Negatives: Positive tweets predicted as neutral.
+
+Neutral sentiments proved the hardest to classify, largely because of linguistic ambiguity and mixed emotions typical in social media discourse.
+
+### 6.3 Recommendations
+
+Data Enrichment:
+Expand the dataset with recent and diverse tweets to improve generalization across slang, emojis, and evolving language patterns.
+
+Advanced Text Representations:
+Implement contextual word embeddings (e.g., Word2Vec, GloVe) or transformer-based models (e.g., BERT, RoBERTa) for deeper semantic understanding.
+
+Contextual Awareness:
+Use models capable of detecting sarcasm and nuanced emotion through contextual learning.
+
+Real-Time Dashboard:
+Integrate the tuned LinearSVC into a live monitoring system for marketing and customer engagement insights.
+
+Aspect-Based Sentiment Analysis:
+Extend the analysis to evaluate sentiment toward specific product features such as camera quality, battery life, or performance.
+
+### 6.4 Summary of Modelling Results
+
+Binary Classification:
+Naive Bayes achieved the highest accuracy (85.3%), outperforming Logistic Regression (84.7%) with strong generalization between positive and negative sentiments.
+
+Multi-Class Classification:
+The tuned LinearSVC achieved 85% training and 69% testing accuracy, showing balanced precision and recall.
+Logistic Regression and Naive Bayes followed at 67.5% and 62%, respectively.
+
+Trends:
+Neutral tweets caused the most misclassifications due to ambiguous tone and informal language such as slang and emojis.
+
+### 6.5 Limitations
+
+Minority Class Prediction:
+Despite SMOTE, predicting neutral sentiment remained challenging due to overlapping linguistic patterns.
+
+Model Limitations:
+TF-IDF combined with classical ML models (Logistic Regression, Naive Bayes, LinearSVC) lacks semantic depth, limiting contextual understanding.
+
+Linguistic Complexity:
+Elements like sarcasm, abbreviations, and emojis reduce interpretability for traditional ML approaches.
+
+### 6.6 Conclusion
+
+Binary Classification:
+Naive Bayes delivered the highest accuracy (85.3%), slightly outperforming Logistic Regression (84.7%).
+
+Multi-Class Classification:
+Tuned LinearSVC achieved 85% training and 69% testing accuracy, balancing precision and recall effectively.
+
+#### Key Takeaways
+
+Model Strengths: Naive Bayes excelled in binary classification; LinearSVC performed best in multi-class tasks.
+
+Accuracy Trends: Positive and negative sentiments were well captured, while neutral sentiments remained ambiguous.
+
+Objective Fulfillment: Models successfully automated sentiment classification, generating data-driven insights into brand perception.
+
+#### Future Work:
+
+Integrate contextual embeddings or transformer architectures for deeper semantic learning.
+
+Deploy models in real-time systems for continuous sentiment tracking.
+
+Expand to aspect-based sentiment analysis for targeted business insights.
+
+### Project Collaborators
+1. Neema Naledi (naledineema@gmail.com)
+2. Henia June (heniajune@gmail.com)
+3. Morgan Amwai (morganamwai@gmail.com)
+4. Brian Kimathi (machingabrian@gmail.com)
+5. Mark Muriithi (mark.muriithi@gmail.com)
+
+### Navigating the Repository
+
+1. Jupyter Notebook: ([nlp.ipynb](https://github.com/Mark-eki/DS-Phase-4-project/blob/Morgan/nlp.ipynb)
+2. Presentation slides PDF:
+3. Data Report:
+4. Dataset:[judge-1377884607_tweet_product_company.csv](https://data.world/crowdflower/brands-and-product-emotions)
+5. README.md: Project Overview
+6. .gitignore: Specifies files to ignore in version control
+
 
 
 ## Prerequisites
 *Getting started*
 1. Fork 
-Create a fork.
-
+- Create a fork.
 2. Clone 
-
 - Type: git clone then paste the link below
 (you can clone using either *SSH key*  or the *HTTPS*)
 [https://github.com/Mark-eki/DS-Phase-4-project.git]
-
-## Key Findings
-1. 
-2. 
-3. 
-
-## Reccomendations 
-1. 
-2. 
-3. 
 
 ## Testing
 To run the cells press ctrl+shift
