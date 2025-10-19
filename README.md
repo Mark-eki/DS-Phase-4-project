@@ -225,7 +225,6 @@ weighted avg       0.68      0.68      0.68      1819
 Accuracy: 0.6750962067069819
 
 
-
 ### 5.2.2 Training a Multiclass Multinomial Naive Bayes Model
 Multiclass Naive Bayes Performance:
               precision    recall  f1-score   support
